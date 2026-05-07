@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: npc-ia-roblox
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn main:app
