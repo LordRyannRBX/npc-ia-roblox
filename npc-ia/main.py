@@ -45,7 +45,7 @@ def npc_combate():
     print(f"Situação: {situacao}")
 
     response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+       model="llama-3.1-8b-instant",
         max_tokens=20,
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
@@ -75,7 +75,7 @@ def npc_chat():
     mensagem = data.get('mensagem', '')
 
     response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model="llama-3.1-8b-instant",
         max_tokens=60,
         messages=[
             {"role": "system", "content": """Você é um inimigo letal num jogo de combate.
