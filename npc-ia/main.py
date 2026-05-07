@@ -1,25 +1,30 @@
 from flask import Flask, request, jsonify
-import google.generativeai as genai
+from groq import Groq
 import os
 
 app = Flask(__name__)
-genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
-model = genai.GenerativeModel("gemini-1.5-flash")
+client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
 @app.route('/npc', methods=['POST'])
 def npc_decision():
     data = request.json
     situacao = data.get('situacao', '')
 
-    prompt = f"""Você é o cérebro de um NPC inimigo num jogo Roblox.
+    response = client.chat.completions.create(
+        model="llama3-8b-8192",
+        max_tokens=10,
+        messages=[{
+            "role": "user",
+            "content": f"""Você é o cérebro de um NPC inimigo num jogo Roblox.
 Responda APENAS com uma dessas palavras: ATACAR, FUGIR, PATRULHAR
 
 Situação atual: {situacao}
 
 Decisão:"""
+        }]
+    )
 
-    response = model.generate_content(prompt)
-    decisao = response.text.strip().upper()
+    decisao = response.choices[0].message.content.strip().upper()
 
     if decisao not in ["ATACAR", "FUGIR", "PATRULHAR"]:
         decisao = "PATRULHAR"
