@@ -33,7 +33,7 @@ def npc_combate():
     situacao = data.get('situacao', '')
 
     response = client.chat.completions.create(
-        model="llama3-8b-8192",
+        model="llama-3.3-70b-versatile",
         max_tokens=20,
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
@@ -61,7 +61,7 @@ def npc_chat():
     mensagem = data.get('mensagem', '')
 
     response = client.chat.completions.create(
-        model="llama3-8b-8192",
+        model="llama-3.3-70b-versatile",
         max_tokens=150,
         messages=[
             {"role": "system", "content": """Você é um NPC inimigo num jogo Roblox de combate.
